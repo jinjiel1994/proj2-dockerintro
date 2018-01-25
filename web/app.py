@@ -4,22 +4,22 @@ import os
 app = Flask(__name__)
 
 
-@app.errorhandler(404)
+@app.errorhandler(404)   # 404 error handler
 def error_404(e):
     return render_template('404.html'), 404
 
 
-@app.errorhandler(403)
+@app.errorhandler(403)   # 403 error handler
 def error_403(e):
     return render_template('403.html'), 403
 
 
 @app.route('/<string:name>')
 def hello(name):
-    if name.endswith('.html') or name.endswith('.css'):
-        if '//' not in name and '..' not in name and '~' not in name:
+    if name.endswith('.html') or name.endswith('.css'):    # Check if the path ends with .html or .css
+        if '//' not in name and '..' not in name and '~' not in name: # Check if the path has '//', '..' or '~'
             filename = './templates/%s' % name
-            if os.path.isfile(filename):
+            if os.path.isfile(filename):  # Check if the file exists
                 return render_template('/%s' % name)
             else:
                 return error_404(404)
